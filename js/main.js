@@ -232,13 +232,9 @@ function weaponText(w) {
   return `${w.name} · ranged${w.count ? ` ×${w.count}` : ''} · ${w.dmg} dmg`;
 }
 
-function renderInfo() {
-  const p = S.hover || S.ui.selected;
-  const el = $('#info');
-  if (!p || !p.alive) {
-    el.innerHTML = '<p class="muted">Hover or select a piece to see its details.</p>';
-    return;
-  }
+const INFO_EMPTY = `<div class="info-empty">${iconSVG('equinox')}<p>Select or hover over a piece for information</p></div>`;
+
+function pieceInfoHTML(p) {
   const t = TYPES[p.type];
   const lum = R.squareLum(S.game, p.x, p.y);
   const bonus = R.lumBonus(p.side, lum);
@@ -246,7 +242,7 @@ function renderInfo() {
   if (p.imprisoned) status.push(`<span class="tag warn">Imprisoned · ${R.roundsUntilRelease(S.game, p.side)} rounds</span>`);
   if (isPowerPoint(p.x, p.y)) status.push('<span class="tag pp">On power point · spell immune</span>');
   for (const note of traitNotes(t)) status.push(`<span class="tag">${note}</span>`);
-  el.innerHTML = `
+  return `
     <div class="info-head ${p.side}">
       <span class="info-icon">${iconSVG(t.icon)}</span>
       <div><div class="info-name">${t.name}</div><div class="info-side">${SIDE_NAME[p.side]}</div></div>
@@ -260,13 +256,57 @@ function renderInfo() {
     <div class="tags">${status.join('')}</div>`;
 }
 
-function showSpellInfo(key) {
-  const sp = spellInfo(key, S.game.turn);
-  const used = S.game.spellsUsed[S.game.turn].includes(key);
-  $('#info').innerHTML = `
+function spellInfoHTML(key, side) {
+  const sp = spellInfo(key, side);
+  const used = S.game.spellsUsed[side].includes(key);
+  return `
     <div class="info-head"><span class="info-icon">${iconSVG(sp.icon)}</span>
     <div><div class="info-name">${sp.name}</div><div class="info-side">${used ? 'Already cast' : 'Once per game'}</div></div></div>
     <p>${sp.desc}</p>`;
+}
+
+function setInfo(html, empty = false) {
+  const el = $('#info');
+  el.innerHTML = html;
+  el.classList.toggle('empty', empty);
+}
+
+// Lock the info card to the height of its wordiest content so it never jumps around.
+// Every piece is measured in both of its wordiest states (imprisoned, or standing on a power point —
+// the rules never allow both), along with every spell description. Re-measured when fonts load or
+// the width changes.
+function sizeInfoCard() {
+  const el = $('#info');
+  const saved = el.innerHTML, savedEmpty = el.classList.contains('empty');
+  el.style.height = 'auto';
+  let max = 0;
+  const measure = (html, empty = false) => {
+    setInfo(html, empty);
+    max = Math.max(max, el.offsetHeight);
+  };
+  for (const [type, t] of Object.entries(TYPES)) {
+    if (!t.mode) continue;
+    measure(pieceInfoHTML({ type, side: t.side, hp: t.hp, x: 2, y: 2, imprisoned: true }));
+    measure(pieceInfoHTML({ type, side: t.side, hp: t.hp, x: 0, y: 4, imprisoned: false }));
+  }
+  for (const key of Object.keys(SPELLS)) for (const side of ['light', 'dark']) measure(spellInfoHTML(key, side));
+  measure(INFO_EMPTY, true);
+  el.style.height = `${Math.ceil(max)}px`;
+  setInfo(saved, savedEmpty);
+}
+
+let sizeTimer;
+window.addEventListener('resize', () => { clearTimeout(sizeTimer); sizeTimer = setTimeout(sizeInfoCard, 150); });
+document.fonts?.ready.then(() => S.game && sizeInfoCard());
+
+function renderInfo() {
+  const p = S.hover || S.ui.selected;
+  if (!p || !p.alive) setInfo(INFO_EMPTY, true);
+  else setInfo(pieceInfoHTML(p));
+}
+
+function showSpellInfo(key) {
+  setInfo(spellInfoHTML(key, S.game.turn));
 }
 
 function log(msg, cls = '') {
@@ -779,6 +819,7 @@ if (saved) {
 }
 buildBoard();
 render();
+sizeInfoCard();
 
 // Exposed for debugging in the console.
 window.__game = S;

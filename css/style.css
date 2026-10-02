@@ -454,3 +454,8 @@ b.dk { color: var(--dark); }
 }
 #help .close:hover { border-color: var(--accent); }
 .panel.right .info { flex: none; }
+.info { overflow: hidden; }
+.info.empty { display: grid; place-items: center; }
+.info-empty { display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--muted); text-align: center; }
+.info-empty svg { width: 34px; height: 34px; opacity: 0.45; }
+.info-empty p { margin: 0; font-size: 13px; }
