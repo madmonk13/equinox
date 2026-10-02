@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Equinox</title>
+  <meta name="description" content="A strategy-and-arena battle game of light versus dark.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <h1 class="brand"><span class="brand-mark" data-icon="equinox"></span><span data-title></span></h1>
+      <div class="topbar-actions">
+        <button class="btn ghost" id="btn-help" title="How to play">How to play</button>
+        <button class="btn ghost" id="btn-sound" title="Toggle sound"></button>
+        <button class="btn" id="btn-menu">New game</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="panel left">
+        <section class="card turn-card">
+          <div class="turn-orb" id="turn-orb"></div>
+          <div>
+            <div class="turn-label" id="turn-label">Light to move</div>
+            <div class="turn-sub" id="turn-sub">Round 1</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Luminance</h2>
+          <div class="lum-meter" id="lum-meter"></div>
+          <div class="lum-text" id="lum-text"></div>
+        </section>
+
+        <section class="card">
+          <h2>Balance</h2>
+          <div class="balance">
+            <div class="bal lt"><span id="cnt-light">18</span><small>Light pieces</small></div>
+            <div class="bal dk"><span id="cnt-dark">18</span><small>Dark pieces</small></div>
+          </div>
+          <div class="pp-row" id="pp-row" title="Power points held"></div>
+        </section>
+
+        <section class="card" id="spell-card">
+          <h2 id="spell-title">Spells</h2>
+          <div class="spell-list" id="spell-list"></div>
+          <div class="spell-prompt" id="spell-prompt" hidden></div>
+        </section>
+      </aside>
+
+      <section class="board-wrap">
+        <div class="board" id="board"></div>
+        <div class="toast" id="toast"></div>
+      </section>
+
+      <aside class="panel right">
+        <section class="card info" id="info">
+          <p class="muted">Hover or select a piece to see its details.</p>
+        </section>
+        <section class="card log-card">
+          <h2>Chronicle</h2>
+          <ol class="log" id="log"></ol>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div class="overlay" id="menu">
+    <div class="menu-card">
+      <div class="menu-glow"></div>
+      <div class="menu-mark" data-icon="equinox"></div>
+      <h1 class="menu-title" data-title></h1>
+      <p class="menu-tag">The Eternal Battle of Light and Dark</p>
+      <div class="menu-continue" id="continue-wrap" hidden>
+        <button class="btn continue" id="btn-continue">Continue game</button>
+        <small id="continue-info"></small>
+      </div>
+      <div class="menu-section">
+        <div class="menu-label">Mode</div>
+        <div class="menu-modes">
+          <button class="mode-btn lt" data-mode="light"><span class="mode-icon" data-icon="sun"></span>Play Light<small>vs computer</small></button>
+          <button class="mode-btn dk" data-mode="dark"><span class="mode-icon" data-icon="moon"></span>Play Dark<small>vs computer</small></button>
+          <button class="mode-btn duo" data-mode="duo"><span class="mode-icon" data-icon="equinox"></span>Two players<small>same keyboard</small></button>
+        </div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-label">Difficulty</div>
+        <div class="seg" id="difficulty">
+          <button data-diff="easy">Easy</button>
+          <button data-diff="normal" class="on">Normal</button>
+          <button data-diff="hard">Hard</button>
+        </div>
+      </div>
+      <button class="btn link" id="menu-help">How to play</button>
+      <p class="menu-foot">An homage to the light-versus-dark strategy duels of the 1980s.</p>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="help">
+    <div class="help-card">
+      <button class="close" id="help-close" aria-label="Close">✕</button>
+      <h2>How to play</h2>
+      <div class="seg help-tabs" role="tablist">
+        <button data-tab="rules" class="on" role="tab">Rules</button>
+        <button data-tab="pieces" role="tab">Pieces</button>
+      </div>
+      <div class="help-pane" data-pane="rules">
+      <div class="help-grid">
+        <div>
+          <h3>Goal</h3>
+          <p>Occupy all five <b>power points</b> (glowing rune squares) at once, or destroy every enemy piece.</p>
+          <h3>Turns</h3>
+          <p>Click one of your pieces, then a highlighted square. <b>Ground</b> pieces step orthogonally and can't pass other pieces. <b>Flying</b> and <b>teleporting</b> pieces go anywhere in range.</p>
+          <h3>Battles</h3>
+          <p>Moving onto an enemy starts a real-time duel in the arena. The loser is removed; the winner keeps its wounds. Wounds heal slowly, and instantly on power points.</p>
+        </div>
+        <div>
+          <h3>Luminance</h3>
+          <p>Some squares are always light or dark; the shimmering ones cycle each round. Fighting on a square of your color grants bonus hit points.</p>
+          <h3>Spells</h3>
+          <p>Your spellcaster (Archmage or Necromancer) can cast each of seven spells once per game instead of moving. Pieces on power points are immune to spells.</p>
+          <h3>Arena controls</h3>
+          <p><kbd>WASD</kbd>/<kbd>Arrows</kbd> move · <kbd>Space</kbd> attack in the direction you face. In two-player mode Light uses <kbd>WASD</kbd> + <kbd>Space</kbd>, Dark uses <kbd>Arrows</kbd> + <kbd>Enter</kbd>.</p>
+          <h3>Saving</h3>
+          <p>Your game saves at the end of every turn. Reloading resumes from the start of the current turn.</p>
+        </div>
+      </div>
+      </div>
+      <div class="help-pane" data-pane="pieces" hidden>
+        <div class="viewer-strip" id="viewer-strip" role="tablist" aria-label="Pieces"></div>
+        <div class="viewer">
+          <div class="viewer-stage">
+            <canvas id="viewer-canvas" width="960" height="340"></canvas>
+            <button class="viewer-nav prev" id="viewer-prev" aria-label="Previous piece">‹</button>
+            <button class="viewer-nav next" id="viewer-next" aria-label="Next piece">›</button>
+            <div class="viewer-count" id="viewer-count"></div>
+          </div>
+          <div class="viewer-info" id="viewer-info"></div>
+        </div>
+        <p class="guide-intro">The preview is the real arena at real scale. The ring around the piece refills as it reloads. Use ‹ › or the arrow keys to browse.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="combat">
+    <div class="combat-frame">
+      <div class="combat-top">
+        <div class="combat-title" id="combat-title"></div>
+        <button class="btn ghost small" id="auto-fight">Let AI fight for me</button>
+      </div>
+      <canvas id="arena" width="960" height="600"></canvas>
+      <div class="combat-hint" id="combat-hint"></div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="gameover">
+    <div class="menu-card">
+      <h1 class="menu-title" id="go-title"></h1>
+      <p class="menu-tag" id="go-sub"></p>
+      <div class="go-actions">
+        <button class="btn" id="go-again">Play again</button>
+        <button class="btn ghost" id="go-menu">Main menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bundle.js"></script>
+</body>
+</html>
