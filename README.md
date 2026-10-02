@@ -47,8 +47,3 @@ node build.mjs
 | `js/main.js` | UI controller, turn flow and saving; `GAME_TITLE` lives here |
 | `js/audio.js` | Sound effects |
 
-## IP note
-
-Game mechanics aren't protected by copyright, but names, logos, art, music and distinctive
-expression are. This project uses an original title, generic fantasy piece names,
-openly licensed icons (see CREDITS.md) and synthesized audio. Don't ship it under the original game's name or trade dress.
