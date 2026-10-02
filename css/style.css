@@ -79,6 +79,10 @@ b.dk { color: var(--dark); }
   padding: 0 24px 24px;
 }
 .panel { display: flex; flex-direction: column; gap: 14px; }
+/* Side panels never outgrow the board, so changing content can't push the page past the window
+   (which made a scrollbar flicker in and out). Overflow scrolls inside the panel instead. */
+.panel.left { max-height: var(--board); overflow-y: auto; scrollbar-width: thin; }
+.panel.right { height: var(--board); }
 .card {
   background: var(--panel);
   border: 1px solid var(--panel-border);
@@ -275,8 +279,8 @@ b.dk { color: var(--dark); }
 .tag.warn { background: rgba(255, 95, 122, 0.2); color: #ffb3c0; }
 .tag.pp { background: rgba(127, 216, 255, 0.18); color: var(--accent); }
 
-.log-card { max-height: calc(var(--board) - 230px); min-height: 200px; display: flex; flex-direction: column; }
-.log { list-style: none; margin: 0; padding: 0; overflow-y: auto; font-size: 12.5px; display: flex; flex-direction: column; gap: 6px; }
+.log-card { flex: 1; min-height: 120px; display: flex; flex-direction: column; }
+.log { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; min-height: 0; font-size: 12.5px; display: flex; flex-direction: column; gap: 6px; }
 .log li { padding-left: 10px; border-left: 2px solid rgba(255,255,255,0.12); color: #cfd3f5; animation: spawn 0.3s; }
 .log li.battle { border-color: var(--danger); }
 .log li.spell { border-color: var(--accent); }
@@ -370,7 +374,9 @@ b.dk { color: var(--dark); }
   .layout { grid-template-columns: 1fr; padding: 0 16px 16px; justify-items: center; }
   .board-wrap { order: -1; }
   .panel { width: min(640px, 100%); }
-  .log-card { max-height: 260px; }
+  .panel.left { max-height: none; overflow: visible; }
+  .panel.right { height: auto; }
+  .log-card { flex: none; max-height: 260px; }
 }
 @media (max-width: 560px) {
   .topbar { padding: 12px 16px; }
@@ -447,3 +453,4 @@ b.dk { color: var(--dark); }
   background: rgba(10, 12, 30, 0.75); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
 }
 #help .close:hover { border-color: var(--accent); }
+.panel.right .info { flex: none; }
