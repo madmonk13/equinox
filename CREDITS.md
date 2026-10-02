@@ -21,7 +21,7 @@ Delapouite), which publishes under CC BY 3.0, so they are credited here as well.
 | Goblin | [Swallower](https://www.svgrepo.com/svg/323409/swallower) |
 | Troll | [Ogre](https://www.svgrepo.com/svg/322884/ogre) |
 | Manticore | [Lion](https://www.svgrepo.com/svg/307515/lion-wild-animal-cat) — modified: mirrored, scorpion tail added |
-| Doppelgänger | [Slime](https://www.svgrepo.com/svg/323268/slime) |
+| Doppelgänger | [Slime](https://www.svgrepo.com/svg/323268/slime) — mirrored |
 | Dragon | [Spiked Dragon Head](https://www.svgrepo.com/svg/323323/spiked-dragon-head) — mirrored |
 | Necromancer | [Overlord Helm](https://www.svgrepo.com/svg/322905/overlord-helm) |
 
