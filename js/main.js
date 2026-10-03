@@ -646,6 +646,7 @@ function scheduleAI(delay) {
 const SAVE_KEY = 'equinox-save';
 
 function saveGame() {
+  if (S.game?.winner) return; // a finished game has nothing to continue
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify({
       v: 1, game: S.game, players: S.players, difficulty: S.difficulty, lastMode: S.lastMode,
@@ -685,6 +686,12 @@ function resumeGame(save) {
   ['menu', 'gameover', 'help'].forEach((id) => $(`#${id}`).classList.add('hidden'));
   render();
   scheduleAI(900);
+}
+
+// Every way of opening the menu goes through here so Continue always reflects the current save.
+function showMenu() {
+  syncContinue();
+  $('#menu').classList.remove('hidden');
 }
 
 function syncContinue() {
@@ -780,8 +787,7 @@ $('#btn-continue').addEventListener('click', () => {
 });
 $('#btn-menu').addEventListener('click', () => {
   if (S.busy && !S.game?.winner) return;
-  syncContinue();
-  $('#menu').classList.remove('hidden');
+  showMenu();
 });
 function openHelp(tab = 'rules') {
   showHelpTab(tab);
@@ -801,7 +807,7 @@ function closeHelp() {
 }
 $('#help-close').addEventListener('click', closeHelp);
 $('#go-again').addEventListener('click', () => newGame(S.lastMode));
-$('#go-menu').addEventListener('click', () => { $('#gameover').classList.add('hidden'); $('#menu').classList.remove('hidden'); });
+$('#go-menu').addEventListener('click', () => { $('#gameover').classList.add('hidden'); showMenu(); });
 const soundBtn = $('#btn-sound');
 const syncSound = () => { soundBtn.innerHTML = iconSVG(isMuted() ? 'mute' : 'sound', 'btn-icon'); };
 soundBtn.addEventListener('click', () => { setMuted(!isMuted()); syncSound(); });

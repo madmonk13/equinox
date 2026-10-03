@@ -1289,7 +1289,7 @@ class Combat {
       this.endT = 1.6;
       this.sound('death');
       for (const f of this.fighters) if (f.hp <= 0) this.burst(f.x, f.y, COLORS[f.side], 60, 260);
-      this.shake = 14;
+      this.shake = 9;
     }
   }
 
@@ -1403,7 +1403,7 @@ class Combat {
       this.damage(foe, w.stomp.dmg, f);
       foe.x += (dx / d) * w.stomp.push; foe.y += (dy / d) * w.stomp.push;
       this.collide(foe);
-      this.shake = Math.min(14, this.shake + 8);
+      this.kick(6);
       this.sound('shot', 'boulder');
     } else {
       f.cd = w.cd;
@@ -1438,11 +1438,17 @@ class Combat {
     }
     f.hp -= dmg;
     f.flash = 0.15;
-    this.shake = Math.min(12, this.shake + dmg * 0.8);
+    // Only real impacts shake the arena; rapid small ticks (auras) would turn it into constant jitter.
+    if (dmg >= 4) this.kick(dmg * 0.6);
     this.burst(f.x, f.y, src.def.weapon.color, 14, 160);
     const drain = src.def.weapon.drain;
     if (drain && src.hp > 0) src.hp = Math.min(src.maxHp, src.hp + drain);
     this.sound('hit');
+  }
+
+  // Screen shake: takes the stronger of the current and new shake rather than stacking them.
+  kick(amount) {
+    this.shake = Math.max(this.shake, Math.min(7, amount));
   }
 
   clampToArena(f) {
@@ -2778,6 +2784,7 @@ function scheduleAI(delay) {
 const SAVE_KEY = 'equinox-save';
 
 function saveGame() {
+  if (S.game?.winner) return; // a finished game has nothing to continue
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify({
       v: 1, game: S.game, players: S.players, difficulty: S.difficulty, lastMode: S.lastMode,
@@ -2817,6 +2824,12 @@ function resumeGame(save) {
   ['menu', 'gameover', 'help'].forEach((id) => $(`#${id}`).classList.add('hidden'));
   render();
   scheduleAI(900);
+}
+
+// Every way of opening the menu goes through here so Continue always reflects the current save.
+function showMenu() {
+  syncContinue();
+  $('#menu').classList.remove('hidden');
 }
 
 function syncContinue() {
@@ -2912,8 +2925,7 @@ $('#btn-continue').addEventListener('click', () => {
 });
 $('#btn-menu').addEventListener('click', () => {
   if (S.busy && !S.game?.winner) return;
-  syncContinue();
-  $('#menu').classList.remove('hidden');
+  showMenu();
 });
 function openHelp(tab = 'rules') {
   showHelpTab(tab);
@@ -2933,7 +2945,7 @@ function closeHelp() {
 }
 $('#help-close').addEventListener('click', closeHelp);
 $('#go-again').addEventListener('click', () => newGame(S.lastMode));
-$('#go-menu').addEventListener('click', () => { $('#gameover').classList.add('hidden'); $('#menu').classList.remove('hidden'); });
+$('#go-menu').addEventListener('click', () => { $('#gameover').classList.add('hidden'); showMenu(); });
 const soundBtn = $('#btn-sound');
 const syncSound = () => { soundBtn.innerHTML = iconSVG(isMuted() ? 'mute' : 'sound', 'btn-icon'); };
 soundBtn.addEventListener('click', () => { setMuted(!isMuted()); syncSound(); });
