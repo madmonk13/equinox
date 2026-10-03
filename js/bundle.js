@@ -29,9 +29,18 @@ const ICONS = {
   valkyrie: { vb: [0, 0, 512, 512], rule: 'nonzero', parts: [
     "M253.714 20.358c-8.79.075-17.448.82-25.89 2.308-46.55 8.208-89.423 26.157-121.225 52.065-31.803 25.908-52.572 59.39-56.316 100.053l-.004.04-.004.04c-8.45 83.885 39.397 152.37 65.604 181.553 5.21 5.804 7.064 13.574 6.533 20.862-.53 7.288-3.04 14.494-6.598 21.838-7.114 14.688-18.703 30.06-31.03 44.457-13.957 16.303-27.375 29.703-37.75 39.627 7.203-1.214 14.764-4.37 22.67-9.368 14.66-9.265 29.554-24.475 42.097-41.298 12.543-16.824 22.807-35.28 28.802-50.586 2.998-7.654 4.912-14.54 5.614-19.72.7-5.178-.177-8.39-.354-8.687-15.34-25.73-31.257-52.027-40.687-79.112-9.43-27.085-12.2-55.565-.073-83.35 25.223-57.79 78.02-85.085 130.772-89.605 52.61-4.508 105.963 12.396 136.545 44.71l23.292 22.474 69.254-41.47c-20.34-26.314-55.49-55.33-96.24-76.257-33.546-17.226-70.702-28.978-106.18-30.428-2.957-.12-5.902-.17-8.832-.144zM372.42 146.184l-.058-.057.31.313c-.083-.087-.17-.17-.25-.256zM244.814 118.95c-2.468.102-4.935.245-7.4.457-3.562.305-7.11.73-10.64 1.255l9.628 45.077c5.76-1.637 11.657-2.823 17.646-3.564l-9.233-43.226zm43.85 3.658c-4.866 12.845-7.33 25.916-6.978 39.04 6.034.48 12.086 1.335 18.12 2.557-.868-12.19 1.306-24.43 6.362-36.98-5.66-1.82-11.515-3.363-17.504-4.617zm-106.672 11.79c-6.112 3.028-12 6.54-17.612 10.532 17.55 8.862 29.7 22.763 34.715 39.594 4.936-3.84 10.145-7.183 15.564-10.063-6.122-16.257-17.577-30.086-32.666-40.063zm88.136 44.796c-1.156-.002-2.308.014-3.457.047-2.675.076-5.328.242-7.952.502-41.993 4.176-77.31 30.258-87.475 90.07-2.198 12.94 4.293 42.822 12.246 67.66 7.952 24.836 16.634 45.517 16.634 45.517l.504 1.198.143 1.295c1.96 17.7-9.11 34.967-21.212 52.26-8.036 11.486-16.43 22.104-23.97 31.72 24-1.35 45.963-11.985 67.177-30.947-.124-.5-.17-.71-.313-1.297-.866-3.594-1.955-8.697-1.687-14.68.446-9.983 5.674-21.958 18.818-31.868-24.577-35.02-28.898-78.757-24.06-115.027l.886-6.65 6.626-1.05c58.715-9.29 97.246-28.81 139.34-54.593-27.566-21.88-61.198-34.115-92.25-34.158zm120.197 37.84c-48.424 30.517-91.56 55.67-157.556 67.35-3.253 33.408 2.427 71.84 25.226 100.798 12.607.61 23.264 6.977 29.904 16.184 6.747 9.353 9.946 21.162 10.83 33.628 23.288 21.426 62.97 39.024 97.764 56.655-3.17-39.444-.296-76.34-14.538-114.11l-62.842-25.3-.062-.027c-14.313-6.018-23.332-13.792-26.512-24.03-3.18-10.236-.874-19.966 1.188-31.064l2.2-11.852 10.74 5.476c23.407 11.94 51.394 20.52 77.548 20.065l6.582-.116 2.103 6.238c10.593 31.436 12.912 56.612 15.752 82.203l7.787 3.113c4.126-29.38 1.912-68.686-3.862-104.425-5.463-33.817-14.72-65.03-22.252-80.788zM223.397 441.148c-.01.444.094.455.01.04-.002-.008-.01-.033-.01-.04z",
   ] },
-  giant: { vb: [-452, 153, 180, 256], rule: 'nonzero', parts: [
-    "M-362.9,157.9c11.3,0,20.5,9.2,20.5,20.5s-9.2,20.5-20.5,20.5s-20.5-9.2-20.5-20.5S-374.2,157.9-362.9,157.9z M-337.1,204.2 h-51.2c-14.2,0-25.6,11.4-25.6,25.6v62.6c0,4.9,3.9,9,9,9s9-3.9,9-9v-57.5c0-1.4,1.2-2.6,2.6-2.6c1.4,0,2.6,1.2,2.6,2.6v155.2 c0,7.7,5.7,14,12.8,14s12.8-6.3,12.8-14v-88.5c0-1.4,1.2-2.6,2.6-2.6s2.6,1.2,2.6,2.6v88.5c0,7.7,5.7,14,12.8,14s12.8-6.3,12.8-14 V234.9c0-1.4,1.2-2.6,2.6-2.6c1.4,0,2.6,1.2,2.6,2.6v57.6c0,4.9,3.9,9,9,9s9-3.9,9-9v-62.7C-311.5,215.6-323.2,204.2-337.1,204.2z",
-    "M-344 300 L-334 311 L-284 252 Q-273 238 -285 228 Q-298 218 -308 233 Z",
+  giant: { vb: [26, 22, 460, 470], rule: 'evenodd', parts: [ // drawn after the pose of the CC0 "rock golem" icon
+    "M256 30 C292 30 314 56 314 92 C314 114 306 130 296 142 C285 154 271 162 256 162 C241 162 227 154 216 142 C206 130 198 114 198 92 C198 56 220 30 256 30 Z M222 88 L250 96 L248 106 L224 100 Z M290 88 L262 96 L264 106 L288 100 Z M236 132 Q256 140 276 132 L274 140 Q256 147 238 140 Z",
+    "M200 84 C188 84 184 98 186 110 C188 122 196 124 202 120 Z M 312 84 C 324 84 328 98 326 110 C 324 122 316 124 310 120 Z",
+    "M218 150 C202 166 170 170 142 174 C114 178 100 196 100 222 L112 262 C126 300 158 320 178 334 L180 372 L332 372 L334 334 C354 320 386 300 400 262 L412 222 C412 196 398 178 370 174 C342 170 310 166 294 150 Z M196 230 Q226 248 252 238 L252 246 Q226 258 194 240 Z M 316 230 Q 286 248 260 238 L 260 246 Q 286 258 318 240 Z M253.5 258 H258.5 V350 H253.5 Z M222 290 Q238 296 250 292 L250 297 Q238 301 222 296 Z M 290 290 Q 274 296 262 292 L 262 297 Q 274 301 290 296 Z M226 322 Q238 326 250 324 L250 329 Q238 331 226 328 Z M 286 322 Q 274 326 262 324 L 262 329 Q 274 331 286 328 Z",
+    "M100 190 C78 200 64 232 60 268 L52 336 C48 360 46 382 48 398 L102 402 C104 380 108 356 112 336 L126 270 C132 238 128 206 114 192 Z",
+    "M 412 190 C 434 200 448 232 452 268 L 460 336 C 464 360 466 382 464 398 L 410 402 C 408 380 404 356 400 336 L 386 270 C 380 238 384 206 398 192 Z",
+    "M40 396 C34 418 38 446 56 460 C74 472 100 466 110 448 C118 430 114 410 106 396 Z M52 436 Q70 444 92 438 L92 443 Q70 450 52 441 Z",
+    "M 472 396 C 478 418 474 446 456 460 C 438 472 412 466 402 448 C 394 430 398 410 406 396 Z M 460 436 Q 442 444 420 438 L 420 443 Q 442 450 460 441 Z",
+    "M170 368 H342 L346 392 H166 Z M246 372 H266 V388 H246 Z",
+    "M166 392 H346 L356 428 C340 436 300 436 262 430 L256 420 L250 430 C212 436 172 436 156 428 Z",
+    "M158 420 L250 420 L242 470 L246 486 L136 486 C136 476 146 470 156 468 Z",
+    "M 354 420 L 262 420 L 270 470 L 266 486 L 376 486 C 376 476 366 470 356 468 Z",
   ] },
   cavalier: { vb: [0, 0, 512, 512], rule: 'nonzero', parts: [
     "M222.776 64.76a16.1 16.1 0 0 1 4.22.56c8.45 2.29 13.88 11.15 14.57 22l-25.78 6 21.89 13.86c-4.93 10.47-13.67 17.3-22.34 17.3a16.1 16.1 0 0 1-4.22-.56c-11.68-3.16-17.59-18.85-13.2-35 3.87-14.26 14.43-24.16 24.86-24.16zm-20.29-9.44a38.78 38.78 0 0 1 9.18-4.65c-5.47-4.23-12.06-8.82-15.9-9.73-27.8-6.55-28.34 34.41-49.08 15.35 16.77 30.56 35.36-12.18 55.8-.96zm54 115.56c-6.437-14.24-23.208-20.557-37.44-14.1l23.34 51.55c14.246-6.438 20.57-23.21 14.12-37.45zm-69.52 35l-21.72-6.66-60.94 31 7.16 14.07zm29.88-65.41h-1.53c-2.836.002-5.66-.37-8.4-1.11a32.64 32.64 0 0 1-14.27-8.23l-19.49 53.78 47.69 14.63-10.68-23.59-14-2.64 9.69-7-8.01-17.51s17.52-7.83 19-8.33zm-132.65 143c-64.72-46.18 42-97.32-47.05-105.87 59.27 26.57-49.43 44.81-10.25 97.71 7.49 10.11 34.76 24.95 49.64 32.56a78.51 78.51 0 0 1 7.7-24.38zm132.79-63.26l2.31-4.42-10.29-3.15-49.91 25.39 68.65 26.47-48.34 40.09 40.63 26.55-6.5-23.93 45.41-49zm13.73-82c4.898.003 9.76.82 14.39 2.42l41.79-21.22a184.67 184.67 0 0 0-35.66-3.51c-5.68 11-14.35 19-24.17 22.51 1.21-.09 2.43-.16 3.65-.16zm182 124.37h-4.15c-5.37 0-11.36-.21-17.77-.63l12.66 18 25-7.33s-1.13-4.55-2.74-11.23a82.78 82.78 0 0 1-13.04 1.23zm-138.97-46.37c13.84-22.89 46.76-66.73 96-66.73 16.79 0 35.49 5.1 56 17.86l-11 19.83.21 21.93c-.43 3.25 3.4 21 7.08 36.9-6.65 1.15-23 1-43.18-1l-5.68-8.1c-16.16-9.55-28.75-15.76-28.75-15.76s.91 7.77 1.22 19.23c-23.06-4.18-46.85-10.67-64.84-20.13a81.992 81.992 0 0 1-7.06-4.03zm120.1-18.38c0 4.678 5.655 7.02 8.963 3.712 3.306-3.307.964-8.962-3.714-8.962a5.25 5.25 0 0 0-5.25 5.25zm-132.64-47.42a44.15 44.15 0 0 1 9.43 12.91l223.21-123.4v-9.4zm76.17 154.12c5.64-14.72 7.68-32.58 8.2-48a325.89 325.89 0 0 1-49-12.25 151.31 151.31 0 0 1-30.12-13.81l13.78 96.66-129 17.14-10.39-87.05c-4.26 1.77-8.45 3.64-12.54 5.64-58.81 28.68-29.46 96.18-29.46 96.18l-25 49.21 30.11 54.35v18.81h33.9l-15.74-22.83-14.48-52.57 48.87-46.4c27.89 1.26 102.44-11.49 134.52-17l83 4.55 22.88 29.29-16.85 12.55 29.55 13.9 9.37-18.45-19.23-49.28zm-51.22-131.12l-11.31 5.72a44.08 44.08 0 0 1-.07 7.38c3.46-4.32 7.23-8.75 11.38-13.1zm31.69 231.92l-5-45.44-20.89-1.14c-6.2 1.06-13.11 2.22-20.44 3.43l21.46 47.74 17.68 54.56-.63 17h31.67l-9.65-17.83zm-140.38 19.45l36.79-53.82c-21.33 2.95-51.31 5.07-51.47 5.07l2.93 7.61-19.1 41.87 47 44.07v11.75h28.65l-11.35-12.92z",
@@ -1045,6 +1054,37 @@ function buildObstacles() {
 }
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+// The simulation always advances in fixed 1/60 s steps (the rate the balance sims use). When frames
+// are slow it runs several steps per frame, so a struggling machine gets choppier, not slow-motion.
+const STEP = 1 / 60;
+const MAX_STEPS = 15;
+
+// Soft glows are pre-rendered once per colour and stamped as images. This replaces canvas shadowBlur,
+// which is extremely slow in some browsers (notably Safari on high-DPI screens).
+const glowCache = new Map();
+function glowSprite(color) {
+  let s = glowCache.get(color);
+  if (!s) {
+    s = document.createElement('canvas');
+    s.width = s.height = 64;
+    const g = s.getContext('2d');
+    const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, color + 'cc');
+    gr.addColorStop(0.45, color + '55');
+    gr.addColorStop(1, color + '00');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 64, 64);
+    glowCache.set(color, s);
+  }
+  return s;
+}
+function drawGlow(c, color, x, y, radius, alpha = 1) {
+  const prev = c.globalAlpha;
+  c.globalAlpha = prev * alpha;
+  c.drawImage(glowSprite(color), x - radius, y - radius, radius * 2, radius * 2);
+  c.globalAlpha = prev;
+}
 // Icons face their own side's enemy; a Doppelgänger wearing the other side's form needs them mirrored.
 const faceAway = (f) => !!f.def.side && f.def.side !== f.side;
 const solid = (o) => !o.cyc || o.alpha > 0.45;
@@ -1143,12 +1183,17 @@ class Combat {
     this.autoBtn.addEventListener('click', this.onAuto);
     this.resize();
     this.last = performance.now();
+    this.acc = 0;
     const loop = (now) => {
-      const dt = Math.min(0.033, (now - this.last) / 1000);
+      this.acc += Math.min((now - this.last) / 1000, STEP * MAX_STEPS);
       this.last = now;
-      this.step(dt);
+      while (this.acc >= STEP && this.phase !== 'done') {
+        this.step(STEP);
+        this.acc -= STEP;
+      }
+      if (this.phase === 'done') return;
       this.draw();
-      if (this.phase !== 'done') requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
   }
@@ -1172,6 +1217,20 @@ class Combat {
     this.canvas.width = W * dpr;
     this.canvas.height = H * dpr;
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.buildBackground(dpr);
+  }
+
+  // Floor, grid, border and the solid pillars never change during a fight, so they are drawn once
+  // (glow included) into an off-screen canvas and copied each frame. Covers a 20px margin for shake.
+  buildBackground(dpr) {
+    const bg = document.createElement('canvas');
+    bg.width = Math.ceil((W + 40) * dpr);
+    bg.height = Math.ceil((H + 40) * dpr);
+    const c = bg.getContext('2d');
+    c.setTransform(dpr, 0, 0, dpr, 20 * dpr, 20 * dpr);
+    this.drawFloor(c);
+    for (const o of this.obstacles) if (!o.cyc) this.drawObstacle(c, o, true);
+    this.bg = bg;
   }
 
   finish() {
@@ -1493,8 +1552,8 @@ class Combat {
     const c = this.ctx;
     c.save();
     if (this.shake > 0) c.translate((Math.random() - 0.5) * this.shake, (Math.random() - 0.5) * this.shake);
-    this.drawFloor(c);
-    for (const o of this.obstacles) this.drawObstacle(c, o);
+    c.drawImage(this.bg, -20, -20, W + 40, H + 40);
+    for (const o of this.obstacles) if (o.cyc) this.drawObstacle(c, o);
     for (const f of this.fighters) this.drawAura(c, f);
     for (const p of this.particles) {
       c.globalAlpha = Math.max(0, p.life / p.max);
@@ -1535,12 +1594,17 @@ class Combat {
     c.strokeRect(1.5, 1.5, W - 3, H - 3);
   }
 
-  drawObstacle(c, o) {
+  // `cached` is true when drawing into the one-off background, where an expensive blur is fine.
+  drawObstacle(c, o, cached = false) {
     const a = o.cyc ? 0.15 + 0.85 * o.alpha : 1;
     c.save();
     c.globalAlpha = a;
-    c.shadowColor = o.cyc ? '#7fd8ff' : '#c6b6ff';
-    c.shadowBlur = solid(o) ? 18 : 4;
+    if (cached) {
+      c.shadowColor = '#c6b6ff';
+      c.shadowBlur = 18;
+    } else if (solid(o)) {
+      drawGlow(c, '#7fd8ff', o.x + o.w / 2, o.y + o.h / 2, o.w * 1.05, 0.55);
+    }
     const g = c.createLinearGradient(o.x, o.y, o.x + o.w, o.y + o.h);
     g.addColorStop(0, o.cyc ? '#6ac9ff' : '#8f7dff');
     g.addColorStop(1, o.cyc ? '#204a7a' : '#2e2560');
@@ -1571,11 +1635,10 @@ class Combat {
 
   drawProjectile(c, p) {
     const a = Math.atan2(p.vy, p.vx);
+    drawGlow(c, p.color, p.x, p.y, Math.max(14, p.r * 2.4), p.style === 'boulder' ? 0.3 : 0.7);
     c.save();
     c.translate(p.x, p.y);
     c.rotate(a);
-    c.shadowColor = p.color;
-    c.shadowBlur = 14;
     c.fillStyle = p.color;
     c.strokeStyle = p.color;
     switch (p.style) {
@@ -1617,7 +1680,6 @@ class Combat {
         break;
       case 'boulder':
         c.rotate(p.spin * 0.4);
-        c.shadowBlur = 6;
         c.beginPath();
         for (let i = 0; i < 9; i++) {
           const aa = (i / 9) * TAU, rr = p.r * (0.82 + 0.18 * Math.sin(i * 2.7));
@@ -1667,12 +1729,12 @@ class Combat {
     c.beginPath(); c.moveTo(f.r + 10, 0); c.lineTo(f.r + 2, -6); c.lineTo(f.r + 2, 6); c.fill();
     if (f.swing > 0) {
       const w = f.def.weapon;
-      c.strokeStyle = w.color;
-      c.lineWidth = 5;
-      c.shadowColor = w.color; c.shadowBlur = 12;
       const prog = 1 - f.swing / 0.18;
       const spread = Math.acos(w.arc ?? 0.45);
-      c.beginPath(); c.arc(0, 0, f.r + w.range * 0.8, -spread + prog * spread, -spread * 0.2 + prog * spread * 1.2); c.stroke();
+      c.strokeStyle = w.color;
+      c.beginPath(); c.arc(0, 0, f.r + w.range * 0.8, -spread + prog * spread, -spread * 0.2 + prog * spread * 1.2);
+      c.globalAlpha = 0.3; c.lineWidth = 12; c.stroke();
+      c.globalAlpha = 1; c.lineWidth = 5; c.stroke();
     }
     if (f.def.shield && f.dashT <= 0) {
       c.strokeStyle = 'rgba(255,241,201,0.75)';
@@ -1691,10 +1753,9 @@ class Combat {
     const g = c.createRadialGradient(f.x - f.r * 0.3, y - f.r * 0.3, 2, f.x, y, f.r);
     g.addColorStop(0, f.side === 'light' ? '#fff8e0' : '#4a2d7a');
     g.addColorStop(1, f.side === 'light' ? '#b8892c' : '#170d2e');
+    drawGlow(c, col, f.x, y, f.r * 2.1, 0.75);
     c.fillStyle = g;
-    c.shadowColor = col; c.shadowBlur = 18;
     c.beginPath(); c.arc(f.x, y, f.r, 0, TAU); c.fill();
-    c.shadowBlur = 0;
     c.strokeStyle = col; c.lineWidth = 2.5; c.stroke();
 
     drawIcon(c, f.def.icon, f.x, y, f.r * 1.45, ICON_INK[f.side], faceAway(f));
@@ -1750,11 +1811,11 @@ class Combat {
     c.textBaseline = 'middle';
     if (this.phase === 'intro') {
       const n = Math.ceil(this.introT);
+      const text = n > 3 ? 'READY' : String(n);
       c.font = '900 64px Cinzel, Georgia, serif';
+      drawGlow(c, '#9fd8ff', W / 2, H / 2, 120, 0.45);
       c.fillStyle = 'rgba(255,255,255,0.92)';
-      c.shadowColor = '#9fd8ff'; c.shadowBlur = 24;
-      c.fillText(n > 3 ? 'READY' : String(n), W / 2, H / 2);
-      c.shadowBlur = 0;
+      c.fillText(text, W / 2, H / 2);
     }
     if (this.phase === 'fight' && this.fightT < 0.7) {
       c.font = '900 64px Cinzel, Georgia, serif';
@@ -1767,10 +1828,12 @@ class Combat {
       if (a.hp <= 0 && b.hp <= 0) text = 'Both fall!';
       else text = `${this.label(a.hp > 0 ? a : b)} prevails`;
       c.font = '900 46px Cinzel, Georgia, serif';
+      c.lineJoin = 'round';
+      c.strokeStyle = 'rgba(0,0,0,0.75)';
+      c.lineWidth = 8;
+      c.strokeText(text, W / 2, H / 2);
       c.fillStyle = '#fff';
-      c.shadowColor = '#000'; c.shadowBlur = 20;
       c.fillText(text, W / 2, H / 2);
-      c.shadowBlur = 0;
     }
   }
 }
@@ -1854,7 +1917,7 @@ class ArenaDemo extends Combat {
 
   draw() {
     const c = this.ctx;
-    this.drawFloor(c);
+    c.drawImage(this.bg, -20, -20, W + 40, H + 40);
     this.drawAura(c, this.a);
     for (const p of this.particles) {
       c.globalAlpha = Math.max(0, p.life / p.max);
@@ -1879,17 +1942,19 @@ class ArenaDemo extends Combat {
     this.canvas.width = W * dpr;
     this.canvas.height = DEMO_H * dpr;
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, -((H - DEMO_H) / 2) * dpr);
+    this.buildBackground(dpr);
   }
 
   start() {
     this.running = true;
     this.resize();
     this.last = performance.now();
+    this.acc = 0;
     const loop = (now) => {
       if (!this.running) return;
-      const dt = Math.min(0.033, (now - this.last) / 1000);
+      this.acc += Math.min((now - this.last) / 1000, STEP * MAX_STEPS);
       this.last = now;
-      this.step(dt);
+      while (this.acc >= STEP) { this.step(STEP); this.acc -= STEP; }
       this.draw();
       requestAnimationFrame(loop);
     };

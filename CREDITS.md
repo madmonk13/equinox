@@ -12,7 +12,7 @@ Delapouite), which publishes under CC BY 3.0, so they are credited here as well.
 | Knight | [Medieval Knight](https://www.svgrepo.com/svg/444141/medieval-knight) by Diemen Design — **MIT License** (see below) |
 | Archer | [Bow](https://www.svgrepo.com/svg/298226/bow) |
 | Valkyrie | [Spartan Helmet](https://www.svgrepo.com/svg/323311/spartan-helmet) |
-| Giant | [Man](https://www.svgrepo.com/svg/307391/man-boy-person-human) — modified: added a club |
+| Giant | Redrawn as a human, based on the pose of [Rock Golem](https://www.svgrepo.com/svg/323126/rock-golem) |
 | Cavalier | [Mounted Knight](https://www.svgrepo.com/svg/320139/mounted-knight) |
 | Griffin | [Griffin Symbol](https://www.svgrepo.com/svg/322464/griffin-symbol) |
 | Phoenix | [Phoenix](https://www.svgrepo.com/svg/355420/mode-standard-phoenix) — mirrored |

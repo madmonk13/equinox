@@ -35,6 +35,37 @@ function buildObstacles() {
 }
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+// The simulation always advances in fixed 1/60 s steps (the rate the balance sims use). When frames
+// are slow it runs several steps per frame, so a struggling machine gets choppier, not slow-motion.
+const STEP = 1 / 60;
+const MAX_STEPS = 15;
+
+// Soft glows are pre-rendered once per colour and stamped as images. This replaces canvas shadowBlur,
+// which is extremely slow in some browsers (notably Safari on high-DPI screens).
+const glowCache = new Map();
+function glowSprite(color) {
+  let s = glowCache.get(color);
+  if (!s) {
+    s = document.createElement('canvas');
+    s.width = s.height = 64;
+    const g = s.getContext('2d');
+    const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, color + 'cc');
+    gr.addColorStop(0.45, color + '55');
+    gr.addColorStop(1, color + '00');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 64, 64);
+    glowCache.set(color, s);
+  }
+  return s;
+}
+function drawGlow(c, color, x, y, radius, alpha = 1) {
+  const prev = c.globalAlpha;
+  c.globalAlpha = prev * alpha;
+  c.drawImage(glowSprite(color), x - radius, y - radius, radius * 2, radius * 2);
+  c.globalAlpha = prev;
+}
 // Icons face their own side's enemy; a Doppelgänger wearing the other side's form needs them mirrored.
 const faceAway = (f) => !!f.def.side && f.def.side !== f.side;
 const solid = (o) => !o.cyc || o.alpha > 0.45;
@@ -133,12 +164,17 @@ export class Combat {
     this.autoBtn.addEventListener('click', this.onAuto);
     this.resize();
     this.last = performance.now();
+    this.acc = 0;
     const loop = (now) => {
-      const dt = Math.min(0.033, (now - this.last) / 1000);
+      this.acc += Math.min((now - this.last) / 1000, STEP * MAX_STEPS);
       this.last = now;
-      this.step(dt);
+      while (this.acc >= STEP && this.phase !== 'done') {
+        this.step(STEP);
+        this.acc -= STEP;
+      }
+      if (this.phase === 'done') return;
       this.draw();
-      if (this.phase !== 'done') requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
   }
@@ -162,6 +198,20 @@ export class Combat {
     this.canvas.width = W * dpr;
     this.canvas.height = H * dpr;
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.buildBackground(dpr);
+  }
+
+  // Floor, grid, border and the solid pillars never change during a fight, so they are drawn once
+  // (glow included) into an off-screen canvas and copied each frame. Covers a 20px margin for shake.
+  buildBackground(dpr) {
+    const bg = document.createElement('canvas');
+    bg.width = Math.ceil((W + 40) * dpr);
+    bg.height = Math.ceil((H + 40) * dpr);
+    const c = bg.getContext('2d');
+    c.setTransform(dpr, 0, 0, dpr, 20 * dpr, 20 * dpr);
+    this.drawFloor(c);
+    for (const o of this.obstacles) if (!o.cyc) this.drawObstacle(c, o, true);
+    this.bg = bg;
   }
 
   finish() {
@@ -483,8 +533,8 @@ export class Combat {
     const c = this.ctx;
     c.save();
     if (this.shake > 0) c.translate((Math.random() - 0.5) * this.shake, (Math.random() - 0.5) * this.shake);
-    this.drawFloor(c);
-    for (const o of this.obstacles) this.drawObstacle(c, o);
+    c.drawImage(this.bg, -20, -20, W + 40, H + 40);
+    for (const o of this.obstacles) if (o.cyc) this.drawObstacle(c, o);
     for (const f of this.fighters) this.drawAura(c, f);
     for (const p of this.particles) {
       c.globalAlpha = Math.max(0, p.life / p.max);
@@ -525,12 +575,17 @@ export class Combat {
     c.strokeRect(1.5, 1.5, W - 3, H - 3);
   }
 
-  drawObstacle(c, o) {
+  // `cached` is true when drawing into the one-off background, where an expensive blur is fine.
+  drawObstacle(c, o, cached = false) {
     const a = o.cyc ? 0.15 + 0.85 * o.alpha : 1;
     c.save();
     c.globalAlpha = a;
-    c.shadowColor = o.cyc ? '#7fd8ff' : '#c6b6ff';
-    c.shadowBlur = solid(o) ? 18 : 4;
+    if (cached) {
+      c.shadowColor = '#c6b6ff';
+      c.shadowBlur = 18;
+    } else if (solid(o)) {
+      drawGlow(c, '#7fd8ff', o.x + o.w / 2, o.y + o.h / 2, o.w * 1.05, 0.55);
+    }
     const g = c.createLinearGradient(o.x, o.y, o.x + o.w, o.y + o.h);
     g.addColorStop(0, o.cyc ? '#6ac9ff' : '#8f7dff');
     g.addColorStop(1, o.cyc ? '#204a7a' : '#2e2560');
@@ -561,11 +616,10 @@ export class Combat {
 
   drawProjectile(c, p) {
     const a = Math.atan2(p.vy, p.vx);
+    drawGlow(c, p.color, p.x, p.y, Math.max(14, p.r * 2.4), p.style === 'boulder' ? 0.3 : 0.7);
     c.save();
     c.translate(p.x, p.y);
     c.rotate(a);
-    c.shadowColor = p.color;
-    c.shadowBlur = 14;
     c.fillStyle = p.color;
     c.strokeStyle = p.color;
     switch (p.style) {
@@ -607,7 +661,6 @@ export class Combat {
         break;
       case 'boulder':
         c.rotate(p.spin * 0.4);
-        c.shadowBlur = 6;
         c.beginPath();
         for (let i = 0; i < 9; i++) {
           const aa = (i / 9) * TAU, rr = p.r * (0.82 + 0.18 * Math.sin(i * 2.7));
@@ -657,12 +710,12 @@ export class Combat {
     c.beginPath(); c.moveTo(f.r + 10, 0); c.lineTo(f.r + 2, -6); c.lineTo(f.r + 2, 6); c.fill();
     if (f.swing > 0) {
       const w = f.def.weapon;
-      c.strokeStyle = w.color;
-      c.lineWidth = 5;
-      c.shadowColor = w.color; c.shadowBlur = 12;
       const prog = 1 - f.swing / 0.18;
       const spread = Math.acos(w.arc ?? 0.45);
-      c.beginPath(); c.arc(0, 0, f.r + w.range * 0.8, -spread + prog * spread, -spread * 0.2 + prog * spread * 1.2); c.stroke();
+      c.strokeStyle = w.color;
+      c.beginPath(); c.arc(0, 0, f.r + w.range * 0.8, -spread + prog * spread, -spread * 0.2 + prog * spread * 1.2);
+      c.globalAlpha = 0.3; c.lineWidth = 12; c.stroke();
+      c.globalAlpha = 1; c.lineWidth = 5; c.stroke();
     }
     if (f.def.shield && f.dashT <= 0) {
       c.strokeStyle = 'rgba(255,241,201,0.75)';
@@ -681,10 +734,9 @@ export class Combat {
     const g = c.createRadialGradient(f.x - f.r * 0.3, y - f.r * 0.3, 2, f.x, y, f.r);
     g.addColorStop(0, f.side === 'light' ? '#fff8e0' : '#4a2d7a');
     g.addColorStop(1, f.side === 'light' ? '#b8892c' : '#170d2e');
+    drawGlow(c, col, f.x, y, f.r * 2.1, 0.75);
     c.fillStyle = g;
-    c.shadowColor = col; c.shadowBlur = 18;
     c.beginPath(); c.arc(f.x, y, f.r, 0, TAU); c.fill();
-    c.shadowBlur = 0;
     c.strokeStyle = col; c.lineWidth = 2.5; c.stroke();
 
     drawIcon(c, f.def.icon, f.x, y, f.r * 1.45, ICON_INK[f.side], faceAway(f));
@@ -740,11 +792,11 @@ export class Combat {
     c.textBaseline = 'middle';
     if (this.phase === 'intro') {
       const n = Math.ceil(this.introT);
+      const text = n > 3 ? 'READY' : String(n);
       c.font = '900 64px Cinzel, Georgia, serif';
+      drawGlow(c, '#9fd8ff', W / 2, H / 2, 120, 0.45);
       c.fillStyle = 'rgba(255,255,255,0.92)';
-      c.shadowColor = '#9fd8ff'; c.shadowBlur = 24;
-      c.fillText(n > 3 ? 'READY' : String(n), W / 2, H / 2);
-      c.shadowBlur = 0;
+      c.fillText(text, W / 2, H / 2);
     }
     if (this.phase === 'fight' && this.fightT < 0.7) {
       c.font = '900 64px Cinzel, Georgia, serif';
@@ -757,10 +809,12 @@ export class Combat {
       if (a.hp <= 0 && b.hp <= 0) text = 'Both fall!';
       else text = `${this.label(a.hp > 0 ? a : b)} prevails`;
       c.font = '900 46px Cinzel, Georgia, serif';
+      c.lineJoin = 'round';
+      c.strokeStyle = 'rgba(0,0,0,0.75)';
+      c.lineWidth = 8;
+      c.strokeText(text, W / 2, H / 2);
       c.fillStyle = '#fff';
-      c.shadowColor = '#000'; c.shadowBlur = 20;
       c.fillText(text, W / 2, H / 2);
-      c.shadowBlur = 0;
     }
   }
 }
@@ -844,7 +898,7 @@ export class ArenaDemo extends Combat {
 
   draw() {
     const c = this.ctx;
-    this.drawFloor(c);
+    c.drawImage(this.bg, -20, -20, W + 40, H + 40);
     this.drawAura(c, this.a);
     for (const p of this.particles) {
       c.globalAlpha = Math.max(0, p.life / p.max);
@@ -869,17 +923,19 @@ export class ArenaDemo extends Combat {
     this.canvas.width = W * dpr;
     this.canvas.height = DEMO_H * dpr;
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, -((H - DEMO_H) / 2) * dpr);
+    this.buildBackground(dpr);
   }
 
   start() {
     this.running = true;
     this.resize();
     this.last = performance.now();
+    this.acc = 0;
     const loop = (now) => {
       if (!this.running) return;
-      const dt = Math.min(0.033, (now - this.last) / 1000);
+      this.acc += Math.min((now - this.last) / 1000, STEP * MAX_STEPS);
       this.last = now;
-      this.step(dt);
+      while (this.acc >= STEP) { this.step(STEP); this.acc -= STEP; }
       this.draw();
       requestAnimationFrame(loop);
     };
